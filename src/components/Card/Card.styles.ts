@@ -2,6 +2,7 @@ import { Card } from "@mui/material";
 import styled from "styled-components";
 
 export const StyledCard = styled(Card)`
+  background-color: var(--light-mode-elements) !important;
   box-shadow: var(--box-shadow) !important;
   color: var(--light-mode-text);
   height: 350px;
@@ -20,7 +21,7 @@ export const StyledCard = styled(Card)`
     }
   }
 
-  & .MuiTypography-h6 {
+  & .MuiTypography-body1 {
     font-weight: 800;
   }
 

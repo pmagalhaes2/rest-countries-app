@@ -1,10 +1,10 @@
 import { ApiService } from "../ApiService";
-import { Countries } from "../types/Countries";
+import { Country } from "../types/Country";
 
 const apiService = new ApiService();
 
 class CountriesService {
-  getCountries(): Promise<Countries[]> {
+  getCountries(): Promise<Country[]> {
     return apiService.get({
       endpoint: `/all`,
       config: { "Content-Type": "application/json" },

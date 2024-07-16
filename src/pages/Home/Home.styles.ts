@@ -5,13 +5,12 @@ export const HomeContainer = styled.div`
   background-color: var(--light-mode-bg);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
   padding: var(--default-padding-desktop);
 
-  & .MuiInputBase-root {
+  &  .MuiInputBase-root {
     box-shadow: var(--box-shadow);
     background-color: var(--white);
-    width: 50%;
   }
 
   & .MuiInputBase-input {
@@ -22,6 +21,13 @@ export const HomeContainer = styled.div`
   & .MuiOutlinedInput-notchedOutline {
     border: none;
   }
+`;
+
+export const InputsContainer = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 export const CardsContainer = styled.div`

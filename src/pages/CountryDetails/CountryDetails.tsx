@@ -5,6 +5,9 @@ import {
 } from "./CountryDetails.styles";
 import { BsArrowLeft } from "react-icons/bs";
 import { StyledButton } from "../../components/Button/Button.styles";
+import { useEffect, useState } from "react";
+import { countriesService } from "../../services/countries/CountriesService";
+import { ICountryDetails } from "../../services/types/Country";
 
 export const CountryDetails = () => {
   const { state } = useLocation();
@@ -20,9 +23,24 @@ export const CountryDetails = () => {
     tld,
     currencies,
     languages,
+    borders,
   } = state;
+  const [bordersInfos, setBordersInfos] = useState<ICountryDetails[]>([]);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    borders && getBorders(borders);
+  }, [borders]);
+
+  const getBorders = async (codes: string[]) => {
+    await countriesService
+      .getBordersByCode(codes)
+      .then((response: any) => {
+        setBordersInfos(response.data);
+      })
+      .catch((err: any) => console.log(err));
+  };
 
   return (
     <CountryDetailsContainer>
@@ -39,7 +57,7 @@ export const CountryDetails = () => {
         </div>
         <div className="content-container">
           <h1>{name}</h1>
-          <div>
+          <div className="content-infos">
             <div>
               <p>
                 <span>Native Name:</span> {native_name}
@@ -70,9 +88,43 @@ export const CountryDetails = () => {
               </p>
             </div>
           </div>
-          <p>
-            <span>Border Countries:</span>
-          </p>
+
+          {bordersInfos.length > 0 && (
+            <div className="borders-container">
+              <p>
+                <span>Border Countries: </span>
+              </p>
+              {bordersInfos.map((border) => (
+                <StyledButton
+                  key={border.name.common}
+                  onClick={() =>
+                    navigate(
+                      `/countries/name/${border.name.common.toLowerCase()}`,
+                      {
+                        state: {
+                          img_url: border.flags.svg,
+                          img_description: border.flags.alt,
+                          name: border.name.common,
+                          native_name: Object.values(border.name.nativeName)[0]
+                            .common,
+                          population: border.population,
+                          region: border.region,
+                          capital: border.capital,
+                          subregion: border.subregion,
+                          tld: border.tld,
+                          currencies: Object.values(border.currencies)[0].name,
+                          languages: Object.values(border.languages).join(", "),
+                          borders: border.borders,
+                        },
+                      }
+                    )
+                  }
+                >
+                  {border.name.common}
+                </StyledButton>
+              ))}
+            </div>
+          )}
         </div>
       </CountryDetailsContent>
     </CountryDetailsContainer>

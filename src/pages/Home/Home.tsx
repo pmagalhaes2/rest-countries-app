@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { countriesService } from "../../services/countries/CountriesService";
-import { Country, CountryDetails } from "../../services/types/Country";
+import { ICountry, ICountryDetails } from "../../services/types/Country";
 import { AiOutlineSearch } from "react-icons/ai";
 import { StyledCard } from "../../components/Card/Card.styles";
 import { useNavigate } from "react-router-dom";
@@ -18,10 +18,12 @@ import { CardsContainer, HomeContainer, InputsContainer } from "./Home.styles";
 import { StyledSelect } from "../../components/Select/Select.styles";
 
 export const Home = () => {
-  const [countries, setCountries] = useState<(Country | CountryDetails)[]>([]);
+  const [countries, setCountries] = useState<(ICountry | ICountryDetails)[]>(
+    []
+  );
   const [regions, setRegions] = useState<string[]>([]);
   const [search, setSearch] = useState("");
-  const [filtered, setFiltered] = useState<(Country | CountryDetails)[]>([]);
+  const [filtered, setFiltered] = useState<(ICountry | ICountryDetails)[]>([]);
   const [selectedRegion, setSelectedRegion] = useState("");
 
   const navigate = useNavigate();
@@ -64,8 +66,9 @@ export const Home = () => {
     filterCountries();
   }, [countries, search, selectedRegion]);
 
-  const handleCardClick = (country: CountryDetails) => {
+  const handleCardClick = (country: ICountryDetails) => {
     const countryName = country.name.common.toLowerCase();
+
     navigate(`/countries/name/${countryName}`, {
       state: {
         img_url: country.flags.svg,
@@ -79,6 +82,7 @@ export const Home = () => {
         tld: country.tld,
         currencies: Object.values(country.currencies)[0].name,
         languages: Object.values(country.languages).join(", "),
+        borders: country.borders,
       },
     });
   };
@@ -92,9 +96,7 @@ export const Home = () => {
           onChange={(e) => setSearch(e.target.value)}
           startAdornment={
             <InputAdornment position="start">
-              <IconButton
-              // onClick={() => console.log("Botão pesquisa clicado!")}
-              >
+              <IconButton>
                 <AiOutlineSearch />
               </IconButton>
             </InputAdornment>
@@ -117,35 +119,41 @@ export const Home = () => {
         </StyledSelect>
       </InputsContainer>
       <CardsContainer>
-        {filtered.map((country) => (
-          <StyledCard
-            key={country.name.common}
-            onClick={() => handleCardClick(country as CountryDetails)}
-          >
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                height="140"
-                image={country.flags.svg}
-                alt={country.flags.alt}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="body1" component="div">
-                  {country.name.common}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  <span>Population:</span> {country.population}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  <span>Region:</span> {country.region}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  <span>Capital:</span> {country.capital}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </StyledCard>
-        ))}
+        {filtered.length ? (
+          filtered.map((country) => (
+            <StyledCard
+              key={country.name.common}
+              onClick={() => handleCardClick(country as ICountryDetails)}
+            >
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={country.flags.svg}
+                  alt={country.flags.alt}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="body1" component="div">
+                    {country.name.common}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    <span>Population:</span> {country.population}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    <span>Region:</span> {country.region}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    <span>Capital:</span> {country.capital}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </StyledCard>
+          ))
+        ) : (
+          <div className="not-found-container">
+            <h2>Country not found :(</h2>
+          </div>
+        )}
       </CardsContainer>
     </HomeContainer>
   );

@@ -1,4 +1,4 @@
-export interface Country {
+export interface ICountry {
   name: {
     common: string;
     nativeName: {
@@ -16,7 +16,7 @@ export interface Country {
   };
 }
 
-export interface CountryDetails extends Country {
+export interface ICountryDetails extends ICountry {
   borders: string[];
   subregion: string;
   tld: string[];
@@ -28,4 +28,5 @@ export interface CountryDetails extends Country {
   languages:  {
     [key: string] : [value: string]
   };
+  cioc: string;
 }

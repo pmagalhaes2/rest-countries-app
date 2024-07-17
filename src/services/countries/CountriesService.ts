@@ -10,6 +10,13 @@ class CountriesService {
       config: { "Content-Type": "application/json" },
     });
   }
+
+  getBordersByCode(codes: string[]): Promise<Country[]> {
+    return apiService.get({
+      endpoint: `/alpha?codes=${codes}`,
+      config: { "Content-Type": "application/json" },
+    });
+  }
 }
 
 export const countriesService = new CountriesService();

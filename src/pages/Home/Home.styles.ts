@@ -1,14 +1,15 @@
 import styled from "styled-components";
 
 export const HomeContainer = styled.div`
-  align-items: flex-start;
+  align-items: center;
   background-color: var(--light-mode-bg);
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 4rem;
+  height: 100vh;
   padding: var(--default-padding-desktop);
 
-  &  .MuiInputBase-root {
+  & .MuiInputBase-root {
     box-shadow: var(--box-shadow);
     background-color: var(--white);
   }
@@ -36,4 +37,8 @@ export const CardsContainer = styled.div`
   flex-wrap: wrap;
   gap: 4rem;
   justify-content: space-between;
+
+  .not-found-container {
+    padding: 4rem 0;
+  }
 `;

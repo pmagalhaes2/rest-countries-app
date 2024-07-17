@@ -11,6 +11,7 @@ export const StyledButton = styled(Button)`
     font-size: 1rem;
     font-weight: 600;
     justify-content: space-around;
+    min-width: max-content !important;
     padding: 0.5rem 2rem;
     text-transform: capitalize;
   }

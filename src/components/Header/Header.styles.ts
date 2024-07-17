@@ -4,7 +4,7 @@ export const HeaderContainer = styled.header`
   background-color: var(--white);
   display: flex;
   width: 100%;
-  padding: 1rem 4rem;
+  padding: 1.25rem 4rem;
   justify-content: space-between;
   box-shadow: var(--box-shadow);
   position: sticky;

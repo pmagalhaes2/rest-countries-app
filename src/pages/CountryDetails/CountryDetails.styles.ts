@@ -11,6 +11,7 @@ export const CountryDetailsContainer = styled.div`
 export const CountryDetailsContent = styled.div`
   align-items: center;
   display: flex;
+  min-height: 50vh;
   justify-content: space-between;
   width: 100%;
 
@@ -27,6 +28,8 @@ export const CountryDetailsContent = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1.125rem;
+    max-width: 40%;
+    min-width: 40%;
 
     h1 {
       font-weight: 800;
@@ -46,7 +49,6 @@ export const CountryDetailsContent = styled.div`
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      justify-content: space-between;
     }
 
     p span {

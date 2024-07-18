@@ -4,10 +4,11 @@ import {
   CountryDetailsContent,
 } from "./CountryDetails.styles";
 import { BsArrowLeft } from "react-icons/bs";
-import { StyledButton } from "../../components/Button/Button.styles";
+import { StyledButton } from "../../styles/Button.styles";
 import { useEffect, useState } from "react";
 import { countriesService } from "../../services/countries/CountriesService";
 import { ICountryDetails } from "../../services/types/Country";
+import { AxiosError } from "axios";
 
 export const CountryDetails = () => {
   const { state } = useLocation();
@@ -39,7 +40,7 @@ export const CountryDetails = () => {
       .then((response: any) => {
         setBordersInfos(response.data);
       })
-      .catch((err: any) => console.log(err));
+      .catch((err: AxiosError) => console.log(err));
   };
 
   return (

@@ -12,10 +12,11 @@ import { useEffect, useState } from "react";
 import { countriesService } from "../../services/countries/CountriesService";
 import { ICountry, ICountryDetails } from "../../services/types/Country";
 import { AiOutlineSearch } from "react-icons/ai";
-import { StyledCard } from "../../components/Card/Card.styles";
+import { StyledCard } from "../../styles/Card.styles";
 import { useNavigate } from "react-router-dom";
 import { CardsContainer, HomeContainer, InputsContainer } from "./Home.styles";
-import { StyledSelect } from "../../components/Select/Select.styles";
+import { StyledSelect } from "../../styles/Select.styles";
+import { AxiosError } from "axios";
 
 export const Home = () => {
   const [countries, setCountries] = useState<(ICountry | ICountryDetails)[]>(
@@ -38,7 +39,7 @@ export const Home = () => {
       .then((response: any) => {
         setCountries(response.data);
       })
-      .catch((err: any) => console.log(err));
+      .catch((err: AxiosError) => console.log(err));
   };
 
   useEffect(() => {

@@ -8,9 +8,9 @@ import {
   OutlinedInput,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { countriesService } from "../../services/countries/CountriesService";
-import { ICountry, ICountryDetails } from "../../services/types/Country";
+import { ICountry, ICountryDetails } from "../../@types/Country";
 import { AiOutlineSearch } from "react-icons/ai";
 import { StyledCard } from "../../styles/Card.styles";
 import { useNavigate } from "react-router-dom";
@@ -36,10 +36,10 @@ export const Home = () => {
   const getAllCountries = async () => {
     await countriesService
       .getCountries()
-      .then((response: any) => {
+      .then((response) => {     
         setCountries(response.data);
       })
-      .catch((err: AxiosError) => console.log(err));
+      .catch((err: AxiosError) => console.error("Erro da aplicação: ", err));
   };
 
   useEffect(() => {
@@ -94,7 +94,7 @@ export const Home = () => {
         <OutlinedInput
           id="outlined-adornment-country"
           placeholder="Search for a country..."
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
           startAdornment={
             <InputAdornment position="start">
               <IconButton>

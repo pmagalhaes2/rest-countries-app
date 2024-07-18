@@ -1,7 +1,13 @@
 import styled from "styled-components";
 
-export const HeaderContainer = styled.header`
-  background-color: var(--white);
+interface HeaderProps {
+  darkmode: boolean;
+}
+export const HeaderContainer = styled.header<HeaderProps>`
+  background-color: ${({ darkmode }) =>
+    darkmode ? "var(--dark-mode-elements)" : "var(--light-mode-elements)"};
+  color: ${({ darkmode }) =>
+    darkmode ? "var(--dark-mode-text)" : "var(--light-mode-text)"};
   display: flex;
   width: 100%;
   padding: 1.25rem 4rem;
@@ -12,7 +18,6 @@ export const HeaderContainer = styled.header`
   z-index: 2;
 
   h2 {
-    color: var(--light-mode-text);
     font-weight: 800;
   }
 
@@ -20,6 +25,8 @@ export const HeaderContainer = styled.header`
     align-items: center;
     background-color: transparent;
     border: none;
+    color: ${({ darkmode }) =>
+      darkmode ? "var(--dark-mode-text)" : "var(--light-mode-text)"};
     cursor: pointer;
     display: flex;
     gap: 0.3125rem;

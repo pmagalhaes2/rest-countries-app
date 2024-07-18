@@ -12,7 +12,7 @@ export function Header({ title }: HeaderProps) {
   const { darkMode, setDarkMode } = useContext(DarkModeContext);
 
   return (
-    <HeaderContainer darkmode={darkMode}>
+    <HeaderContainer $darkmode={darkMode}>
       <h2>{title}</h2>
       <button onClick={() => setDarkMode(!darkMode)}>
         <AiOutlineMoon />

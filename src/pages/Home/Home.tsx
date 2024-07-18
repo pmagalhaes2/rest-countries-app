@@ -68,9 +68,7 @@ export const Home = () => {
   }, [countries, search, selectedRegion]);
 
   const handleCardClick = (country: ICountryDetails) => {
-    const countryName = country.name.common.toLowerCase();
-
-    navigate(`/countries/name/${countryName}`, {
+    navigate(`/countries/name/${country.name.common}`, {
       state: {
         img_url: country.flags.svg,
         img_description: country.flags.alt,

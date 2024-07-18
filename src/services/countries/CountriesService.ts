@@ -1,4 +1,7 @@
-import { ICountryDetailsResponse, ICountryResponse } from "../../@types/ResponseData";
+import {
+  ICountryDetailsResponse,
+  ICountryResponse,
+} from "../../@types/ResponseData";
 import { ApiService } from "../ApiService";
 
 const apiService = new ApiService();
@@ -14,6 +17,13 @@ class CountriesService {
   getBordersByCode(codes: string[]): Promise<ICountryDetailsResponse> {
     return apiService.get({
       endpoint: `/alpha?codes=${codes}`,
+      config: { "Content-Type": "application/json" },
+    });
+  }
+
+  getCountryByName(name: string): Promise<ICountryDetailsResponse> {
+    return apiService.get({
+      endpoint: `/name/${name}`,
       config: { "Content-Type": "application/json" },
     });
   }

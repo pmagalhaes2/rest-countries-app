@@ -5,7 +5,6 @@ import {
   IconButton,
   InputAdornment,
   OutlinedInput,
-  SelectChangeEvent,
   Typography,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
@@ -18,6 +17,7 @@ import { CardsContainer, HomeContainer, InputsContainer } from "./Home.styles";
 import { StyledMenuItem, StyledSelect } from "../../styles/Select.styles";
 import { AxiosError } from "axios";
 import { DarkModeContext } from "../../context/darkModeContext";
+import { SelectChangeEvent } from '@mui/material/Select'
 
 export const Home = () => {
   const [countries, setCountries] = useState<(ICountry | ICountryDetails)[]>(
@@ -109,7 +109,7 @@ export const Home = () => {
         <StyledSelect
           $darkmode={darkModeContext.darkMode}
           value={selectedRegion}
-          onChange={(e: SelectChangeEvent) => setSelectedRegion(e.target.value)}
+          onChange={(e: SelectChangeEvent<any>) => setSelectedRegion(e.target.value)}
           displayEmpty
           inputProps={{ "aria-label": "Without label" }}
         >

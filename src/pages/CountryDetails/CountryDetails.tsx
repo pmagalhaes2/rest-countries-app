@@ -5,11 +5,11 @@ import {
 } from "./CountryDetails.styles";
 import { BsArrowLeft } from "react-icons/bs";
 import { StyledButton } from "../../styles/Button.styles";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { countriesService } from "../../services/countries/CountriesService";
 import { ICountryDetails } from "../../@types/Country";
 import { AxiosError } from "axios";
-import { DarkModeContext } from "../../context/darkModeContext";
+import { useDarkMode } from "../../context/darkModeContext";
 
 export const CountryDetails = () => {
   const [isStateAvailable, setIsStateAvailable] = useState<boolean>(false);
@@ -20,7 +20,7 @@ export const CountryDetails = () => {
   const [countryDetails, setCountryDetails] = useState<ICountryDetails>();
   const [bordersInfos, setBordersInfos] = useState<ICountryDetails[]>([]);
 
-  const { darkModeContext } = useContext(DarkModeContext);
+  const { darkMode } = useDarkMode();
 
   useEffect(() => {
     const fetchCountryDetails = async () => {
@@ -57,16 +57,16 @@ export const CountryDetails = () => {
   };
 
   return (
-    <CountryDetailsContainer $darkmode={darkModeContext.darkMode}>
+    <CountryDetailsContainer $darkmode={darkMode}>
       <StyledButton
-        $darkmode={darkModeContext.darkMode}
+        $darkmode={darkMode}
         variant="outlined"
         startIcon={<BsArrowLeft />}
         onClick={() => navigate("/countries")}
       >
         Back
       </StyledButton>
-      <CountryDetailsContent $darkmode={darkModeContext.darkMode}>
+      <CountryDetailsContent $darkmode={darkMode}>
         <div className="image-container">
           <img
             src={isStateAvailable ? state.img_url : countryDetails?.flags.svg}
@@ -137,7 +137,7 @@ export const CountryDetails = () => {
               </p>
               {bordersInfos.map((border) => (
                 <StyledButton
-                  $darkmode={darkModeContext.darkMode}
+                  $darkmode={darkMode}
                   key={border.name.common}
                   onClick={() =>
                     navigate(`/countries/name/${border.name.common}`, {

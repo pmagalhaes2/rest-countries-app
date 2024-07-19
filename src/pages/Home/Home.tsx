@@ -7,7 +7,7 @@ import {
   OutlinedInput,
   Typography,
 } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { countriesService } from "../../services/countries/CountriesService";
 import { ICountry, ICountryDetails } from "../../@types/Country";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -16,8 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { CardsContainer, HomeContainer, InputsContainer } from "./Home.styles";
 import { StyledMenuItem, StyledSelect } from "../../styles/Select.styles";
 import { AxiosError } from "axios";
-import { DarkModeContext } from "../../context/darkModeContext";
-import { SelectChangeEvent } from '@mui/material/Select'
+import { useDarkMode } from "../../context/darkModeContext";
+import { SelectChangeEvent } from "@mui/material/Select";
 
 export const Home = () => {
   const [countries, setCountries] = useState<(ICountry | ICountryDetails)[]>(
@@ -30,7 +30,7 @@ export const Home = () => {
 
   const navigate = useNavigate();
 
-  const { darkModeContext } = useContext(DarkModeContext);
+  const { darkMode } = useDarkMode();
 
   useEffect(() => {
     getAllCountries();
@@ -90,7 +90,7 @@ export const Home = () => {
   };
 
   return (
-    <HomeContainer $darkmode={darkModeContext.darkMode}>
+    <HomeContainer $darkmode={darkMode}>
       <InputsContainer>
         <OutlinedInput
           id="outlined-adornment-country"
@@ -107,27 +107,33 @@ export const Home = () => {
           }
         />
         <StyledSelect
-          $darkmode={darkModeContext.darkMode}
+          $darkmode={darkMode}
           value={selectedRegion}
-          onChange={(e: SelectChangeEvent<any>) => setSelectedRegion(e.target.value)}
+          onChange={(e: SelectChangeEvent<any>) =>
+            setSelectedRegion(e.target.value)
+          }
           displayEmpty
           inputProps={{ "aria-label": "Without label" }}
         >
-          <StyledMenuItem $darkmode={darkModeContext.darkMode} value="">
+          <StyledMenuItem $darkmode={darkMode} value="">
             <em>Filter by Region</em>
           </StyledMenuItem>
           {regions.map((region) => (
-            <StyledMenuItem $darkmode={darkModeContext.darkMode} value={region} key={region}>
+            <StyledMenuItem
+              $darkmode={darkMode}
+              value={region}
+              key={region}
+            >
               {region}
             </StyledMenuItem>
           ))}
         </StyledSelect>
       </InputsContainer>
-      <CardsContainer $darkmode={darkModeContext.darkMode}>
+      <CardsContainer $darkmode={darkMode}>
         {filtered.length ? (
           filtered.map((country) => (
             <StyledCard
-              $darkmode={darkModeContext.darkMode}
+              $darkmode={darkMode}
               key={country.name.common}
               onClick={() => handleCardClick(country as ICountryDetails)}
             >

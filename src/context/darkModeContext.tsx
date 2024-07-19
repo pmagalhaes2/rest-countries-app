@@ -1,36 +1,57 @@
-import React, { createContext, ReactNode, useMemo, useState } from "react";
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
-interface darkModeContextType {
-  darkModeContext: {
-    darkMode: boolean;
-    setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-  };
+interface DarkModeContextType {
+  darkMode: boolean;
+  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleTheme: () => void;
 }
 
 interface darkModeProviderType {
   children: ReactNode;
 }
 
-export const DarkModeContext = createContext<darkModeContextType>({
-  darkModeContext: {
-    darkMode: false,
-    setDarkMode: () => {},
-  },
+export const DarkModeContext = createContext<DarkModeContextType>({
+  darkMode: false,
+  setDarkMode: () => {},
+  toggleTheme: () => {},
 });
 
 export const DarkModeContextProvider = ({ children }: darkModeProviderType) => {
-  const [darkMode, setDarkMode] = useState<boolean>(false);
-  const darkModeContext = useMemo(
+  const previousTheme = localStorage.getItem("darkmode");
+  const [darkMode, setDarkMode] = useState<boolean>(
+    previousTheme ? JSON.parse(previousTheme) : false
+  );
+
+  const toggleTheme = () => {
+    setDarkMode(() => {
+      const newTheme = !darkMode;
+      localStorage.setItem("darkmode", JSON.stringify(newTheme));
+      return newTheme;
+    });
+  };
+
+  const value = useMemo(
     () => ({
       darkMode,
       setDarkMode,
+      toggleTheme,
     }),
-    [darkMode, setDarkMode]
+    [darkMode]
   );
 
   return (
-    <DarkModeContext.Provider value={{ darkModeContext }}>
+    <DarkModeContext.Provider value={value}>
       {children}
     </DarkModeContext.Provider>
   );
+};
+
+export const useDarkMode = () => {
+  return useContext(DarkModeContext);
 };

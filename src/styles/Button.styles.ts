@@ -1,13 +1,16 @@
 import { Button } from "@mui/material";
 import styled from "styled-components";
 
-export const StyledButton = styled(Button)`
+export const StyledButton = styled(Button)<{ $darkmode: boolean }>`
   &.MuiButtonBase-root {
+    background-color: ${({ $darkmode }) =>
+      $darkmode ? "var(--dark-mode-elements)" : "var(--light-mode-elements)"};
     border: none;
-    box-shadow: var(--button-box-shadow);
-    color: var(--light-mode-text);
+    box-shadow: var(--box-shadow);
+    color: ${({ $darkmode }) =>
+      $darkmode ? "var(--dark-mode-text)" : "var(--light-mode-text)"};
     display: flex;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: var(--default-font);
     font-size: 1rem;
     font-weight: 600;
     justify-content: space-around;

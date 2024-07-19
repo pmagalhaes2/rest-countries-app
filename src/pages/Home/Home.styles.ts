@@ -1,21 +1,34 @@
 import styled from "styled-components";
 
-export const HomeContainer = styled.div`
+export const HomeContainer = styled.div<{ $darkmode: boolean }>`
   align-items: center;
-  background-color: var(--light-mode-bg);
+  background-color: ${({ $darkmode }) =>
+    $darkmode ? "var(--dark-mode-bg)" : "var(--light-mode-bg)"};
   display: flex;
   flex-direction: column;
   gap: 4rem;
-  height: 100vh;
+  min-height: 100vh;
   padding: var(--default-padding-desktop);
 
   & .MuiInputBase-root {
     box-shadow: var(--box-shadow);
-    background-color: var(--white);
+    background: ${({ $darkmode }) =>
+      $darkmode ? "var(--dark-mode-elements)" : "var(--light-mode-elements)"};
+    color: ${({ $darkmode }) =>
+      $darkmode ? "var(--dark-mode-text)" : "var(--light-mode-input)"};
+    min-width: 12.5rem;
+    max-width: 100%;
+
+    svg {
+      color: ${({ $darkmode }) =>
+        $darkmode ? "var(--dark-mode-text)" : "var(--light-mode-text)"};
+    }
   }
 
   & .MuiInputBase-input {
     border: none;
+    color: ${({ $darkmode }) =>
+      $darkmode ? "var(--dark-mode-text)" : "var(--light-mode-input)"};
     font-size: 14px;
   }
 
@@ -31,7 +44,7 @@ export const InputsContainer = styled.div`
   width: 100%;
 `;
 
-export const CardsContainer = styled.div`
+export const CardsContainer = styled.div<{ $darkmode: boolean }>`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
@@ -39,6 +52,12 @@ export const CardsContainer = styled.div`
   justify-content: space-between;
 
   .not-found-container {
+    height: 100vh;
     padding: 4rem 0;
+
+    h2 {
+      color: ${({ $darkmode }) =>
+        $darkmode ? "var(--dark-mode-text)" : "var(--light-mode-text)"};
+    }
   }
 `;

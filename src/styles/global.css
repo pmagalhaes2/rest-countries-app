@@ -1,8 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap");
 
 :root {
-  --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  --button-box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 10px;
+  --box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 10px;
   --white: #ffffff;
   --light-mode-bg: hsl(0, 0%, 98%);
   --light-mode-elements: hsl(0, 0%, 100%);
@@ -12,11 +11,12 @@
   --dark-mode-elements: hsl(209, 23%, 22%);
   --dark-mode-text: hsl(0, 0%, 100%);
   --default-padding-desktop: 4rem;
+  --default-font: "Nunito Sans", sans-serif;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Nunito Sans", sans-serif;
+  font-family: var(--default-font);
 }

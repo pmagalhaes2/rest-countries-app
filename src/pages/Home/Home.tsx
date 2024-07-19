@@ -4,19 +4,20 @@ import {
   CardMedia,
   IconButton,
   InputAdornment,
-  MenuItem,
   OutlinedInput,
+  SelectChangeEvent,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { countriesService } from "../../services/countries/CountriesService";
 import { ICountry, ICountryDetails } from "../../@types/Country";
 import { AiOutlineSearch } from "react-icons/ai";
 import { StyledCard } from "../../styles/Card.styles";
 import { useNavigate } from "react-router-dom";
 import { CardsContainer, HomeContainer, InputsContainer } from "./Home.styles";
-import { StyledSelect } from "../../styles/Select.styles";
+import { StyledMenuItem, StyledSelect } from "../../styles/Select.styles";
 import { AxiosError } from "axios";
+import { DarkModeContext } from "../../context/darkModeContext";
 
 export const Home = () => {
   const [countries, setCountries] = useState<(ICountry | ICountryDetails)[]>(
@@ -29,6 +30,8 @@ export const Home = () => {
 
   const navigate = useNavigate();
 
+  const { darkModeContext } = useContext(DarkModeContext);
+
   useEffect(() => {
     getAllCountries();
   }, []);
@@ -36,7 +39,7 @@ export const Home = () => {
   const getAllCountries = async () => {
     await countriesService
       .getCountries()
-      .then((response) => {     
+      .then((response) => {
         setCountries(response.data);
       })
       .catch((err: AxiosError) => console.error("Erro da aplicação: ", err));
@@ -87,12 +90,14 @@ export const Home = () => {
   };
 
   return (
-    <HomeContainer>
+    <HomeContainer $darkmode={darkModeContext.darkMode}>
       <InputsContainer>
         <OutlinedInput
           id="outlined-adornment-country"
           placeholder="Search for a country..."
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setSearch(e.target.value)
+          }
           startAdornment={
             <InputAdornment position="start">
               <IconButton>
@@ -102,25 +107,27 @@ export const Home = () => {
           }
         />
         <StyledSelect
+          $darkmode={darkModeContext.darkMode}
           value={selectedRegion}
-          onChange={(e: any) => setSelectedRegion(e.target.value)}
+          onChange={(e: SelectChangeEvent) => setSelectedRegion(e.target.value)}
           displayEmpty
           inputProps={{ "aria-label": "Without label" }}
         >
-          <MenuItem value="">
+          <StyledMenuItem $darkmode={darkModeContext.darkMode} value="">
             <em>Filter by Region</em>
-          </MenuItem>
+          </StyledMenuItem>
           {regions.map((region) => (
-            <MenuItem value={region} key={region}>
+            <StyledMenuItem $darkmode={darkModeContext.darkMode} value={region} key={region}>
               {region}
-            </MenuItem>
+            </StyledMenuItem>
           ))}
         </StyledSelect>
       </InputsContainer>
-      <CardsContainer>
+      <CardsContainer $darkmode={darkModeContext.darkMode}>
         {filtered.length ? (
           filtered.map((country) => (
             <StyledCard
+              $darkmode={darkModeContext.darkMode}
               key={country.name.common}
               onClick={() => handleCardClick(country as ICountryDetails)}
             >

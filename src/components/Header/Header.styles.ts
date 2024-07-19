@@ -1,9 +1,6 @@
 import styled from "styled-components";
 
-interface HeaderProps {
-  $darkmode: boolean;
-}
-export const HeaderContainer = styled.header<HeaderProps>`
+export const HeaderContainer = styled.header<{ $darkmode: boolean }>`
   background-color: ${({ $darkmode }) =>
     $darkmode ? "var(--dark-mode-elements)" : "var(--light-mode-elements)"};
   color: ${({ $darkmode }) =>

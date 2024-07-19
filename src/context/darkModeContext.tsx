@@ -1,12 +1,35 @@
-import { createContext, useState } from "react";
+import React, { createContext, ReactNode, useMemo, useState } from "react";
 
-export const DarkModeContext = createContext<any>({});
+interface darkModeContextType {
+  darkModeContext: {
+    darkMode: boolean;
+    setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+}
 
-export const DarkModeContextProvider = ({ children }: any) => {
+interface darkModeProviderType {
+  children: ReactNode;
+}
+
+export const DarkModeContext = createContext<darkModeContextType>({
+  darkModeContext: {
+    darkMode: false,
+    setDarkMode: () => {},
+  },
+});
+
+export const DarkModeContextProvider = ({ children }: darkModeProviderType) => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  const darkModeContext = useMemo(
+    () => ({
+      darkMode,
+      setDarkMode,
+    }),
+    [darkMode, setDarkMode]
+  );
 
   return (
-    <DarkModeContext.Provider value={{ darkMode, setDarkMode }}>
+    <DarkModeContext.Provider value={{ darkModeContext }}>
       {children}
     </DarkModeContext.Provider>
   );

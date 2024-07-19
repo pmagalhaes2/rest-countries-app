@@ -1,10 +1,16 @@
 import { Card } from "@mui/material";
 import styled from "styled-components";
 
-export const StyledCard = styled(Card)`
-  background-color: var(--light-mode-elements) !important;
+export const StyledCard = styled(Card)<{ $darkmode: boolean }>`
+  background-color: ${({ $darkmode }) =>
+    $darkmode
+      ? "var(--dark-mode-elements) !important"
+      : "var(--light-mode-elements)  !important"};
   box-shadow: var(--box-shadow) !important;
-  color: var(--light-mode-text);
+  color: ${({ $darkmode }) =>
+    $darkmode
+      ? "var(--dark-mode-text) !important"
+      : "var(--light-mode-text) !important"};
   height: 350px;
   width: 250px;
 
@@ -22,13 +28,20 @@ export const StyledCard = styled(Card)`
   }
 
   & .MuiTypography-body1 {
+    font-family: var(--default-font);
+    font-size: 1.125rem;
     font-weight: 800;
   }
 
   & .MuiTypography-body2 {
-    color: var(--light-mode-text);
+    color: ${({ $darkmode }) =>
+      $darkmode
+        ? "var(--dark-mode-text) !important"
+        : "var(--light-mode-text) !important"};
+    font-family: var(--default-font);
+    font-weight: 400;
     > span {
-      font-weight: 800;
+      font-weight: 700;
     }
   }
 `;

@@ -8,13 +8,13 @@ type HeaderProps = {
   title: string;
 };
 
-export function Header({ title }: HeaderProps) {
-  const { darkMode, setDarkMode } = useContext(DarkModeContext);
+export function Header({ title }: Readonly<HeaderProps>) {
+  const { darkModeContext } = useContext(DarkModeContext);
 
   return (
-    <HeaderContainer $darkmode={darkMode}>
+    <HeaderContainer $darkmode={darkModeContext.darkMode}>
       <h2>{title}</h2>
-      <button onClick={() => setDarkMode(!darkMode)}>
+      <button onClick={() => darkModeContext.setDarkMode(!darkModeContext.darkMode)}>
         <AiOutlineMoon />
         <p>Dark Mode</p>
       </button>

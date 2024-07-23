@@ -18,6 +18,8 @@
     "@mui/material": "^5.16.1",
     "@types/styled-components": "^5.1.34",
     "axios": "^1.7.2",
+    "axios-mock-adapter": "^1.22.0",
+    "dotenv": "^16.4.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
@@ -43,6 +45,7 @@
     "@vitejs/plugin-react": "^4.3.1",
     "babel-jest": "^29.7.0",
     "babel-preset-vite": "^1.1.3",
+    "env-cmd": "^10.1.0",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
@@ -52,31 +55,5 @@
     "jest-environment-node": "^29.7.0",
     "typescript": "^5.2.2",
     "vite": "^5.3.1"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "jest-environment-jsdom",
-    "setupFilesAfterEnv": ["<rootDir>/setup-tests.js"],
-    "transform": {
-      "^.+\\.[tj]sx?$": "babel-jest"
-    },
-    "moduleFileExtensions": ["js", "jsx", "ts", "tsx", "mjs"],
-    "globals": {
-      "ts-jest": {
-        "useESM": true
-      }
-    },
-    "testMatch": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[tj]s?(x)"],
-    "collectCoverageFrom": [
-      "<rootDir>/src/**/*.{js,ts,jsx,tsx}",
-      "!<rootDir>/**/*Type.{js,ts,jsx,tsx}",
-      "!<rootDir>/**/*.styled.{js,ts,jsx,tsx}",
-      "!<rootDir>/**/icons/**",
-      "!<rootDir>/**/App.tsx",
-      "!<rootDir>/**/main.tsx",
-      "!<rootDir>/**/vite-env.d.ts",
-      "!<rootDir>/**/index.ts",
-      "!<rootDir>/**/*.enum.{js,ts,jsx,tsx}"
-    ]
   }
 }

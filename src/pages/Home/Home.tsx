@@ -107,6 +107,7 @@ export const Home = () => {
           }
         />
         <StyledSelect
+          data-testid="region-select"
           $darkmode={darkMode}
           value={selectedRegion}
           onChange={(e: SelectChangeEvent<any>) =>
@@ -119,11 +120,7 @@ export const Home = () => {
             <em>Filter by Region</em>
           </StyledMenuItem>
           {regions.map((region) => (
-            <StyledMenuItem
-              $darkmode={darkMode}
-              value={region}
-              key={region}
-            >
+            <StyledMenuItem $darkmode={darkMode} value={region} key={region}>
               {region}
             </StyledMenuItem>
           ))}
@@ -133,6 +130,7 @@ export const Home = () => {
         {filtered.length ? (
           filtered.map((country) => (
             <StyledCard
+              data-testid="country-card"
               $darkmode={darkMode}
               key={country.name.common}
               onClick={() => handleCardClick(country as ICountryDetails)}
@@ -163,7 +161,11 @@ export const Home = () => {
           ))
         ) : (
           <div className="not-found-container">
-            <h2>Country not found :(</h2>
+            <h2>
+              {!countries.length
+                ? "Failed to fetch countries"
+                : "Country not found :("}
+            </h2>
           </div>
         )}
       </CardsContainer>

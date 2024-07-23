@@ -13,7 +13,7 @@ export function Header({ title }: Readonly<HeaderProps>) {
   return (
     <HeaderContainer $darkmode={darkMode}>
       <h2>{title}</h2>
-      <button onClick={toggleTheme}>
+      <button onClick={() => toggleTheme()}>
         <AiOutlineMoon />
         <p>Dark Mode</p>
       </button>

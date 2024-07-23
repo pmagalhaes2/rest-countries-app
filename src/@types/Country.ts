@@ -1,3 +1,11 @@
+export interface ICountryDetailsResponse {
+  data: ICountryDetails[];
+}
+
+export interface ICountriesResponse {
+  data: ICountry[];
+}
+
 export interface ICountry {
   name: {
     common: string;
@@ -25,8 +33,8 @@ export interface ICountryDetails extends ICountry {
       name: string;
     };
   };
-  languages:  {
-    [key: string] : [value: string]
+  languages: {
+    [key: string]: [value: string];
   };
   cioc: string;
 }

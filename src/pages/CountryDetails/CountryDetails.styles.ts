@@ -71,6 +71,22 @@ export const CountryDetailsContent = styled.div<{ $darkmode: boolean }>`
       span {
         font-weight: 700;
       }
+
+      h4 {
+        font-weight: 400;
+      }
+    }
+  }
+
+  .not-found-container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    h2 {
+      color: ${({ $darkmode }) =>
+        $darkmode ? "var(--dark-mode-text)" : "var(--light-mode-text)"};
     }
   }
 `;

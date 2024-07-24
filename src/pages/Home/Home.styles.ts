@@ -50,10 +50,13 @@ export const CardsContainer = styled.div<{ $darkmode: boolean }>`
   flex-wrap: wrap;
   gap: 4rem;
   justify-content: space-between;
+  min-height: 50vh;
 
   .not-found-container {
-    height: 100vh;
-    padding: 4rem 0;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 
     h2 {
       color: ${({ $darkmode }) =>

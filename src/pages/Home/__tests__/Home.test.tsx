@@ -4,11 +4,10 @@ import { Home } from "../Home";
 import {
   countriesService,
   MOCK_COUNTRIES,
-  MOCK_COUNTRY_DETAILS,
 } from "../../../services/countries/CountriesService";
 import { ICountryDetailsResponse } from "../../../@types/Country";
 
-export const MOCK_COUNTRIES_DETAILS: ICountryDetailsResponse = {
+const MOCK_COUNTRIES_DETAILS: ICountryDetailsResponse = {
   data: [
     {
       name: {

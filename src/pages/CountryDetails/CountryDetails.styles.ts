@@ -21,9 +21,9 @@ export const CountryDetailsContent = styled.div<{ $darkmode: boolean }>`
   width: 100%;
 
   .image-container {
-    max-width: 750px;
+    max-width: 450px;
     min-width: 40%;
-    max-height: 750px;
+    max-height: 450px;
     min-height: 40%;
   }
 

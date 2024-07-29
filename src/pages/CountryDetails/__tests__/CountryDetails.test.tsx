@@ -1,45 +1,10 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { CountryDetails } from "../CountryDetails";
+import { countriesService } from "../../../services/countries/CountriesService";
 import { act } from "react";
-import {
-  countriesService,
-  MOCK_BORDERS,
-  MOCK_COUNTRY_DETAILS,
-} from "../../../services/countries/CountriesService";
-import { ICountryDetailsResponse } from "../../../@types/Country";
-
-const MOCK_COUNTRY_DETAILS_WITHOUT_BORDERS: ICountryDetailsResponse = {
-  data: [
-    {
-      name: {
-        common: "Iceland",
-        nativeName: {
-          isl: {
-            common: "Ísland",
-          },
-        },
-      },
-      tld: [".is"],
-      cioc: "ISL",
-      currencies: {
-        ISK: {
-          name: "Icelandic króna",
-        },
-      },
-      capital: ["Reykjavik"],
-      region: "Europe",
-      subregion: "Northern Europe",
-      languages: {
-        isl: "Icelandic",
-      },
-      population: 366425,
-      flags: {
-        svg: "https://flagcdn.com/is.svg",
-        alt: "The flag of Iceland has a blue field with a large white-edged red cross that extends to the edges of the field. The vertical part of this cross is offset towards the hoist side.",
-      },
-    },
-  ],
-};
+import { MOCK_BORDERS } from "../../../services/countries/mocks/MockBorders";
+import { MOCK_COUNTRY_DETAILS } from "../../../services/countries/mocks/MockCountryDetails";
+import { MOCK_COUNTRY_DETAILS_WITHOUT_BORDERS } from "../mocks/MockCountryDetailsWithoutBorders";
 
 const MOCK_NAVIGATE = jest.fn();
 let MOCK_NAME_URL = "United States";

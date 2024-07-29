@@ -51,16 +51,16 @@ export const CardsContainer = styled.div<{ $darkmode: boolean }>`
   gap: 4rem;
   justify-content: space-between;
   min-height: 50vh;
+`;
 
-  .not-found-container {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    width: 100%;
+export const NotFoundContainer = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
 
-    h2 {
-      color: ${({ $darkmode }) =>
-        $darkmode ? "var(--dark-mode-text)" : "var(--light-mode-text)"};
-    }
-  }
+export const NotFoundMessage = styled.h2<{ $darkmode: boolean }>`
+  color: ${({ $darkmode }) =>
+    $darkmode ? "var(--dark-mode-text)" : "var(--light-mode-text)"};
 `;

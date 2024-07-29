@@ -10,15 +10,6 @@ export const StyledSelect = styled(Select)<{ $darkmode: boolean }>`
     font-size: 14px;
     font-style: normal;
   }
-
-  em {
-    color: ${({ $darkmode }) =>
-      $darkmode
-        ? "var(--dark-mode-text) !important"
-        : "var(--light-mode-text) !important"};
-    font-size: 14px;
-    font-style: normal;
-  }
 `;
 
 export const StyledMenuItem = styled(MenuItem)<{ $darkmode: boolean }>`
@@ -35,13 +26,4 @@ export const StyledMenuItem = styled(MenuItem)<{ $darkmode: boolean }>`
       background-color: ${({ $darkmode }) =>
         $darkmode ? "var(--dark-mode-bg)" : "var(--light-mode-bg)"};
     }
-
-    em {
-      color: ${({ $darkmode }) =>
-        $darkmode
-          ? "var(--dark-mode-text) !important"
-          : "var(--light-mode-text) !important"};
-      font-style: normal;
-    }
-  }
 `;

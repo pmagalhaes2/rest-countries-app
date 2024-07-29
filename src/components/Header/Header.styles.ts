@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import styled from "styled-components";
 
 export const HeaderContainer = styled.header<{ $darkmode: boolean }>`
@@ -13,28 +14,25 @@ export const HeaderContainer = styled.header<{ $darkmode: boolean }>`
   position: sticky;
   top: 0;
   z-index: 2;
+`;
 
-  h2 {
-    font-weight: 800;
-  }
+export const Title = styled.h1`
+  font-size: 1.5rem;
+  font-weight: 800;
+`;
 
-  button {
-    align-items: center;
-    background-color: transparent;
-    border: none;
-    color: ${({ $darkmode}) =>
-      $darkmode ? "var(--dark-mode-text)" : "var(--light-mode-text)"};
-    cursor: pointer;
-    display: flex;
-    gap: 0.3125rem;
+export const StyledButton = styled.button<{ $darkmode: boolean }>`
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  color: ${({ $darkmode }) =>
+    $darkmode ? "var(--dark-mode-text)" : "var(--light-mode-text)"};
+  cursor: pointer;
+  display: flex;
+  gap: 0.3125rem;
+`;
 
-    svg {
-      width: 1.25rem;
-    }
-
-    p {
-      font-weight: 600;
-      font-size: 1rem;
-    }
-  }
+export const Paragraph = styled.p`
+  font-weight: 600;
+  font-size: 1rem;
 `;

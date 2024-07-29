@@ -1,26 +1,37 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
+  BorderCountriesContainer,
   CountryDetailsContainer,
   CountryDetailsContent,
+  CountryImage,
+  CountryImageContainer,
+  CountryInfoContainer,
+  CountryInfoDetails,
+  DetailBlock,
+  NoBordersMessage,
+  NotFoundContainer,
+  NotFoundMessage,
+  Paragraph,
+  Span,
 } from "./CountryDetails.styles";
 import { BsArrowLeft } from "react-icons/bs";
 import { StyledButton } from "../../styles/Button.styles";
 import { useCallback, useEffect, useState } from "react";
 import { countriesService } from "../../services/countries/CountriesService";
-import { ICountryDetails } from "../../@types/Country";
+import { ICountryDetails } from "../../interfaces/Country";
 import { AxiosError } from "axios";
 import { useDarkMode } from "../../context/darkModeContext";
 
 export const CountryDetails = () => {
   const [isStateAvailable, setIsStateAvailable] = useState<boolean>(false);
   const { state } = useLocation();
-  const { name: nameUrl } = useParams();
+  const { name: nameUrl } = useParams<{ name: string }>();
   const navigate = useNavigate();
 
   const [countryDetails, setCountryDetails] = useState<ICountryDetails>();
   const [bordersInfos, setBordersInfos] = useState<ICountryDetails[]>([]);
 
-  const [bordersMessage, setBordersMessage] = useState("");
+  const [bordersMessage, setBordersMessage] = useState<string>("");
 
   const { darkMode } = useDarkMode();
 
@@ -33,26 +44,15 @@ export const CountryDetails = () => {
       setIsStateAvailable(true);
       setCountryDetails(state);
       if (state.borders) {
-        getBorders(state.borders);
+        await getBorders(state.borders);
       } else {
         setBordersMessage("No borders");
       }
     } else {
       setIsStateAvailable(false);
-      await countriesService
-        .getCountryByName(nameUrl as string)
-        .then((response) => {
-          const country = response.data[0];
-          setCountryDetails(country);
-          if (country.borders) {
-            getBorders(country.borders);
-          } else {
-            setBordersMessage("No borders");
-          }
-        })
-        .catch((err) => console.error("Erro da aplicação: ", err));
+      await getCountry(nameUrl as string);
     }
-  }, []);
+  }, [nameUrl, state]);
 
   const getBorders = async (codes: string[]) => {
     await countriesService
@@ -64,6 +64,21 @@ export const CountryDetails = () => {
         setBordersMessage("Failed to fetch borders");
         console.error("Erro da aplicação: ", err);
       });
+  };
+
+  const getCountry = async (name: string) => {
+    await countriesService
+      .getCountryByName(name)
+      .then((response) => {
+        const country = response.data[0];
+        setCountryDetails(country);
+        if (country.borders) {
+          getBorders(country.borders);
+        } else {
+          setBordersMessage("No borders");
+        }
+      })
+      .catch((err) => console.error("Erro da aplicação: ", err));
   };
 
   return (
@@ -80,8 +95,8 @@ export const CountryDetails = () => {
       <CountryDetailsContent $darkmode={darkMode}>
         {countryDetails ? (
           <>
-            <div className="image-container">
-              <img
+            <CountryImageContainer>
+              <CountryImage
                 src={
                   isStateAvailable ? state.img_url : countryDetails?.flags.svg
                 }
@@ -91,70 +106,70 @@ export const CountryDetails = () => {
                     : countryDetails?.flags.alt
                 }
               />
-            </div>
-            <div className="content-container">
+            </CountryImageContainer>
+            <CountryInfoContainer $darkmode={darkMode}>
               <h1>
                 {isStateAvailable ? state.name : countryDetails?.name.common}
               </h1>
-              <div className="content-infos">
-                <div>
-                  <p>
-                    <span>Native Name:</span>{" "}
+              <CountryInfoDetails>
+                <DetailBlock>
+                  <Paragraph>
+                    <Span>Native Name:</Span>{" "}
                     {isStateAvailable
                       ? state.native_name
                       : countryDetails?.name.nativeName[
                           Object.keys(countryDetails?.name.nativeName || {})[0]
                         ].common}
-                  </p>
-                  <p>
-                    <span>Population:</span>{" "}
+                  </Paragraph>
+                  <Paragraph>
+                    <Span>Population:</Span>{" "}
                     {isStateAvailable
                       ? state.population
                       : countryDetails?.population}
-                  </p>
-                  <p>
-                    <span>Region:</span>{" "}
+                  </Paragraph>
+                  <Paragraph>
+                    <Span>Region:</Span>{" "}
                     {isStateAvailable ? state.region : countryDetails?.region}
-                  </p>
-                  <p>
-                    <span>Sub Region:</span>{" "}
+                  </Paragraph>
+                  <Paragraph>
+                    <Span>Sub Region:</Span>{" "}
                     {isStateAvailable
                       ? state.subregion
                       : countryDetails?.subregion}
-                  </p>
-                  <p>
-                    <span>Capital:</span>{" "}
+                  </Paragraph>
+                  <Paragraph>
+                    <Span>Capital:</Span>{" "}
                     {isStateAvailable ? state.capital : countryDetails?.capital}
-                  </p>
-                </div>
-                <div>
-                  <p>
-                    <span>Top Level Domain:</span>{" "}
+                  </Paragraph>
+                </DetailBlock>
+                <DetailBlock>
+                  <Paragraph>
+                    <Span>Top Level Domain:</Span>{" "}
                     {isStateAvailable ? state.tld : countryDetails?.tld}
-                  </p>
-                  <p>
-                    <span>Currencies:</span>{" "}
+                  </Paragraph>
+                  <Paragraph>
+                    <Span>Currencies:</Span>{" "}
                     {isStateAvailable
                       ? state.currencies
                       : Object.values(countryDetails?.currencies || {})
                           .map((currency) => currency.name)
                           .join(", ")}
-                  </p>
-                  <p>
-                    <span>Languages: </span>
+                  </Paragraph>
+                  <Paragraph>
+                    <Span>Languages: </Span>
                     {isStateAvailable
                       ? state.languages
                       : Object.values(countryDetails?.languages || {}).join(
                           ", "
                         )}
-                  </p>
-                </div>
-              </div>
+                  </Paragraph>
+                </DetailBlock>
+              </CountryInfoDetails>
 
-              <div className="borders-container">
-                <p>
-                  <span>Border Countries: </span>
-                </p>
+              <BorderCountriesContainer>
+                <Paragraph>
+                  <Span>Border Countries: </Span>
+                </Paragraph>
                 {bordersInfos.length > 0 ? (
                   bordersInfos.map((border) => (
                     <StyledButton
@@ -189,15 +204,17 @@ export const CountryDetails = () => {
                     </StyledButton>
                   ))
                 ) : (
-                  <h4>{bordersMessage}</h4>
+                  <NoBordersMessage>{bordersMessage}</NoBordersMessage>
                 )}
-              </div>
-            </div>
+              </BorderCountriesContainer>
+            </CountryInfoContainer>
           </>
         ) : (
-          <div className="not-found-container">
-            <h2>Failed to fetch country</h2>
-          </div>
+          <NotFoundContainer>
+            <NotFoundMessage $darkmode={darkMode}>
+              Failed to fetch country
+            </NotFoundMessage>
+          </NotFoundContainer>
         )}
       </CountryDetailsContent>
     </CountryDetailsContainer>

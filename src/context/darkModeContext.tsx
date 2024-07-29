@@ -1,28 +1,13 @@
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useContext, useMemo, useState } from "react";
+import { IDarkModeContext, IDarkModeProvider } from "./interfaces/IDarkMode";
 
-interface DarkModeContextType {
-  darkMode: boolean;
-  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-  toggleTheme: () => void;
-}
-
-interface darkModeProviderType {
-  children: ReactNode;
-}
-
-export const DarkModeContext = createContext<DarkModeContextType>({
+export const DarkModeContext = createContext<IDarkModeContext>({
   darkMode: false,
   setDarkMode: () => {},
   toggleTheme: () => {},
 });
 
-export const DarkModeContextProvider = ({ children }: darkModeProviderType) => {
+export const DarkModeContextProvider = ({ children }: IDarkModeProvider) => {
   const previousTheme = localStorage.getItem("darkmode");
   const [darkMode, setDarkMode] = useState<boolean>(
     previousTheme ? JSON.parse(previousTheme) : false

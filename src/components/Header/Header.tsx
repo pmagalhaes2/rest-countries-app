@@ -1,22 +1,27 @@
 import "./Header";
-import { HeaderContainer } from "./Header.styles";
+import {
+  HeaderContainer,
+  Paragraph,
+  StyledButton,
+  Title,
+} from "./Header.styles";
 import { AiOutlineMoon } from "react-icons/ai";
 import { useDarkMode } from "../../context/darkModeContext";
 
-type HeaderProps = {
+interface HeaderProps {
   title: string;
-};
+}
 
 export function Header({ title }: Readonly<HeaderProps>) {
   const { darkMode, toggleTheme } = useDarkMode();
 
   return (
     <HeaderContainer $darkmode={darkMode}>
-      <h2>{title}</h2>
-      <button onClick={() => toggleTheme()}>
+      <Title>{title}</Title>
+      <StyledButton onClick={() => toggleTheme()} $darkmode={darkMode}>
         <AiOutlineMoon />
-        <p>Dark Mode</p>
-      </button>
+        <Paragraph>Dark Mode</Paragraph>
+      </StyledButton>
     </HeaderContainer>
   );
 }

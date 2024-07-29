@@ -2,10 +2,10 @@ import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 import {
   countriesService,
-  MOCK_BORDERS,
-  MOCK_COUNTRIES,
-  MOCK_COUNTRY_DETAILS,
 } from "../CountriesService";
+import { MOCK_COUNTRIES } from "../mocks/MockCountries";
+import { MOCK_BORDERS } from "../mocks/MockBorders";
+import { MOCK_COUNTRY_DETAILS } from "../mocks/MockCountryDetails";
 
 const mock = new MockAdapter(axios);
 

@@ -1,5 +1,5 @@
 import { ApiService } from "../ApiService";
-import { MOCK_COUNTRIES } from "../countries/CountriesService";
+import { MOCK_COUNTRIES } from "../countries/mocks/MockCountries";
 
 describe("ApiService", () => {
   let apiService: ApiService;

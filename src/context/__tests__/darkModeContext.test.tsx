@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { DarkModeContextProvider } from "../darkModeContext";
-import { act } from "react";
 import { Header } from "../../components/Header/Header";
+import { act } from "react";
 
 describe("Dark mode context", () => {
   beforeEach(async () => {

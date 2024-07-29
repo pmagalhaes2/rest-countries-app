@@ -9,24 +9,28 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { countriesService } from "../../services/countries/CountriesService";
-import { ICountry, ICountryDetails } from "../../@types/Country";
+import { ICountryDetails } from "../../interfaces/Country";
 import { AiOutlineSearch } from "react-icons/ai";
 import { StyledCard } from "../../styles/Card.styles";
 import { useNavigate } from "react-router-dom";
-import { CardsContainer, HomeContainer, InputsContainer } from "./Home.styles";
+import {
+  CardsContainer,
+  HomeContainer,
+  InputsContainer,
+  NotFoundContainer,
+  NotFoundMessage,
+} from "./Home.styles";
 import { StyledMenuItem, StyledSelect } from "../../styles/Select.styles";
 import { AxiosError } from "axios";
 import { useDarkMode } from "../../context/darkModeContext";
 import { SelectChangeEvent } from "@mui/material/Select";
 
 export const Home = () => {
-  const [countries, setCountries] = useState<(ICountry | ICountryDetails)[]>(
-    []
-  );
+  const [countries, setCountries] = useState<ICountryDetails[]>([]);
   const [regions, setRegions] = useState<string[]>([]);
-  const [search, setSearch] = useState("");
-  const [filtered, setFiltered] = useState<(ICountry | ICountryDetails)[]>([]);
-  const [selectedRegion, setSelectedRegion] = useState("");
+  const [search, setSearch] = useState<string>("");
+  const [filtered, setFiltered] = useState<ICountryDetails[]>([]);
+  const [selectedRegion, setSelectedRegion] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -43,6 +47,25 @@ export const Home = () => {
         setCountries(response.data);
       })
       .catch((err: AxiosError) => console.error("Erro da aplicação: ", err));
+  };
+
+  const handleCardClick = (country: ICountryDetails) => {
+    navigate(`/countries/name/${country.name.common}`, {
+      state: {
+        img_url: country.flags.svg,
+        img_description: country.flags.alt,
+        name: country.name.common,
+        native_name: Object.values(country.name.nativeName)[0].common,
+        population: country.population,
+        region: country.region,
+        capital: country.capital,
+        subregion: country.subregion,
+        tld: country.tld,
+        currencies: Object.values(country.currencies)[0].name,
+        languages: Object.values(country.languages).join(", "),
+        borders: country.borders,
+      },
+    });
   };
 
   useEffect(() => {
@@ -69,25 +92,6 @@ export const Home = () => {
     };
     filterCountries();
   }, [countries, search, selectedRegion]);
-
-  const handleCardClick = (country: ICountryDetails) => {
-    navigate(`/countries/name/${country.name.common}`, {
-      state: {
-        img_url: country.flags.svg,
-        img_description: country.flags.alt,
-        name: country.name.common,
-        native_name: Object.values(country.name.nativeName)[0].common,
-        population: country.population,
-        region: country.region,
-        capital: country.capital,
-        subregion: country.subregion,
-        tld: country.tld,
-        currencies: Object.values(country.currencies)[0].name,
-        languages: Object.values(country.languages).join(", "),
-        borders: country.borders,
-      },
-    });
-  };
 
   return (
     <HomeContainer $darkmode={darkMode}>
@@ -117,7 +121,7 @@ export const Home = () => {
           inputProps={{ "aria-label": "Without label" }}
         >
           <StyledMenuItem $darkmode={darkMode} value="">
-            <em>Filter by Region</em>
+            Filter by Region
           </StyledMenuItem>
           {regions.map((region) => (
             <StyledMenuItem $darkmode={darkMode} value={region} key={region}>
@@ -133,7 +137,7 @@ export const Home = () => {
               data-testid="country-card"
               $darkmode={darkMode}
               key={country.name.common}
-              onClick={() => handleCardClick(country as ICountryDetails)}
+              onClick={() => handleCardClick(country)}
             >
               <CardActionArea>
                 <CardMedia
@@ -160,13 +164,13 @@ export const Home = () => {
             </StyledCard>
           ))
         ) : (
-          <div className="not-found-container">
-            <h2>
+          <NotFoundContainer>
+            <NotFoundMessage $darkmode={darkMode}>
               {!countries.length
                 ? "Failed to fetch countries"
                 : "Country not found :("}
-            </h2>
-          </div>
+            </NotFoundMessage>
+          </NotFoundContainer>
         )}
       </CardsContainer>
     </HomeContainer>

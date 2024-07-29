@@ -2,18 +2,19 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { Header } from "../Header";
 import { act } from "react";
 
-const MOCKED_TITLE = "Teste";
+const MOCK_TITLE = "Teste";
 
 describe("Header component", () => {
   beforeEach(async () => {
-    await act(() => {
-      render(<Header title={MOCKED_TITLE} />);
+    await act(async () => {
+      render(<Header title={MOCK_TITLE} />);
     });
   });
+
   it("deve renderizar o componente Header", () => {
     const header = screen.getByRole("banner");
 
-    expect(header).toHaveTextContent(MOCKED_TITLE);
+    expect(header).toHaveTextContent(MOCK_TITLE);
     expect(header).toBeInTheDocument();
   });
 
@@ -26,6 +27,6 @@ describe("Header component", () => {
       fireEvent.click(button);
     });
 
-    expect(header).toHaveStyle('background-color: var(--dark-mode-elements)');
+    expect(header).toHaveStyle("background-color: var(--dark-mode-elements)");
   });
 });

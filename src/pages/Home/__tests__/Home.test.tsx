@@ -3,7 +3,7 @@ import { act } from "react";
 import { Home } from "../Home";
 import { countriesService } from "../../../services/countries/CountriesService";
 import { MOCK_COUNTRIES } from "../../../services/countries/mocks/MockCountries";
-import { MOCK_COUNTRIES_DETAILS } from "../mocks/mockCountriesDetails";
+import { MOCK_COUNTRIES_DETAILS } from "../mocks/MockCountriesDetails";
 
 const MOCK_NAVIGATE = jest.fn();
 
